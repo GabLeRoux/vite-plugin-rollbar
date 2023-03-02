@@ -4,6 +4,7 @@
   "description": "A Vite plugin to upload sourcemaps to Rollbar after build.",
   "main": "./cjs/index.js",
   "module": "./esm/index.js",
+  "type": "module",
   "exports": {
     ".": {
       "require": "./cjs/index.js",
@@ -12,7 +13,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "NODE_ENV=production rollup -c",
+    "build": "NODE_ENV=production rollup -c --bundleConfigAsCjs",
     "release": "npx bumpp --push --tag --commit && npm publish"
   },
   "repository": {
@@ -36,21 +37,21 @@
   "homepage": "https://github.com/clinggroup/vite-plugin-rollbar#readme",
   "license": "MIT",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^22.0.2",
-    "@rollup/plugin-eslint": "^8.0.2",
-    "eslint": "^8.21.0",
+    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-eslint": "^9.0.3",
+    "eslint": "^8.35.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "rollup": "^2.77.2",
+    "eslint-plugin-import": "^2.27.5",
+    "rollup": "^3.18.0",
     "rollup-plugin-auto-external": "^2.0.0"
   },
   "dependencies": {
-    "fast-glob": "^3.2.11",
+    "fast-glob": "^3.2.12",
     "form-data": "^4.0.0",
-    "node-fetch-native": "^0.1.4",
+    "node-fetch-native": "^1.0.2",
     "verror": "^1.10.1"
   },
   "peerDependencies": {
-    "vite": "^2.6.0 || ^3.0.0"
+    "vite": "^2.6.0 || ^3.0.0 || ^4.0.0"
   }
 }
