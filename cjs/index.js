@@ -7,13 +7,6 @@ var glob = require('fast-glob');
 var fetch = require('node-fetch-native');
 var VError = require('verror');
 
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
-
-var FormData__default = /*#__PURE__*/_interopDefaultLegacy(FormData);
-var glob__default = /*#__PURE__*/_interopDefaultLegacy(glob);
-var fetch__default = /*#__PURE__*/_interopDefaultLegacy(fetch);
-var VError__default = /*#__PURE__*/_interopDefaultLegacy(VError);
-
 const ROLLBAR_ENDPOINT = 'https://api.rollbar.com/api/1/sourcemap';
 
 // Custom rollup plugin for uploading rollbar deploys
@@ -23,13 +16,13 @@ async function uploadSourcemap(form, { filename, rollbarEndpoint, silent }) {
 
   let res;
   try {
-    res = await fetch__default["default"](rollbarEndpoint, {
+    res = await fetch(rollbarEndpoint, {
       method: 'POST',
       body: form
     });
   } catch (err) {
     // Network or operational errors
-    throw new VError__default["default"](err, errMessage)
+    throw new VError(err, errMessage)
   }
 
   // 4xx or 5xx response
@@ -71,7 +64,7 @@ function rollbarSourcemaps({
     },
     name: 'vite-plugin-rollbar',
     async writeBundle() {
-      const files = await glob__default["default"]('./**/*.map', { cwd: outputDir });
+      const files = await glob('./**/*.map', { cwd: outputDir });
       const sourcemaps = files
         .map((file) => {
           const sourcePath = file.replace(/\.map$/, '');
@@ -99,9 +92,9 @@ function rollbarSourcemaps({
 
       if (!sourcemaps.length) return
 
-      Promise.all(
+      await Promise.all(
         sourcemaps.map((asset) => {
-          const form = new FormData__default["default"]();
+          const form = new FormData();
           form.append('access_token', accessToken);
           form.append('version', version);
           form.append('minified_url', `${baseUrl}${asset.original_file}`);

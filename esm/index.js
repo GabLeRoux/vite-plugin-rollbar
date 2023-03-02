@@ -90,7 +90,7 @@ function rollbarSourcemaps({
 
       if (!sourcemaps.length) return
 
-      Promise.all(
+      await Promise.all(
         sourcemaps.map((asset) => {
           const form = new FormData();
           form.append('access_token', accessToken);
